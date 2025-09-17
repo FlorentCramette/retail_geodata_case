@@ -1,0 +1,53 @@
+Objet : Démonstration technique - Pipeline de données retail avec ML et géolocalisation
+
+---
+
+Bonjour [Nom du recruteur],
+
+J'espère que vous allez bien. Suite à notre échange concernant le poste de [Data Engineer/Data Scientist/Titre du poste], je souhaiterais vous présenter un projet technique récent qui illustre concrètement mes compétences en data engineering et machine learning.
+
+🎯 **Le Projet : Retail GeoData Pipeline**
+
+J'ai développé une solution complète d'optimisation d'implantations de magasins, incluant :
+• Pipeline de données automatisé (gestion CSV "sales", nettoyage, validation)
+• Modèles ML de prédiction de chiffre d'affaires (Random Forest, cross-validation)
+• Dashboard interactif avec cartographie géospatiale
+• Solutions d'automatisation production-ready (Airflow, Mage.ai, Docker)
+
+📊 **Résultats Concrets**
+• Pipeline traite 5K+ transactions avec 8.7% de nettoyage automatique
+• Validation qualité : 100% de taux de succès (Great Expectations)
+• Modèles ML avec R²=0.85 pour prédiction CA magasins
+• Dashboard temps réel avec analyse concurrentielle géolocalisée
+
+🔗 **Code & Démonstration**
+Le projet est disponible sur GitHub : https://github.com/FlorentCramette/retail_geodata_case
+(Branch 'dev' pour la version la plus récente avec pipeline complet)
+
+💻 **Stack Technique**
+Python • pandas • scikit-learn • Streamlit • Folium • Great Expectations • Docker
+
+🎥 **Proposition de Démo**
+Je serais ravi de vous présenter ce projet en live (15-20 minutes) :
+• Architecture et choix techniques
+• Dashboard interactif en fonctionnement
+• Deep-dive dans le code (pipeline, ML, validation)
+• Solutions de production et scalabilité
+
+Ce projet démontre ma capacité à créer des solutions data end-to-end, depuis l'ingestion de données "sales" jusqu'aux insights business actionables, avec un focus sur la robustesse et la scalabilité.
+
+Seriez-vous disponible pour une courte démonstration dans les prochains jours ? Je peux m'adapter à vos créneaux.
+
+Merci pour votre temps et votre considération.
+
+Cordialement,
+[Votre nom]
+
+P.S. : N'hésitez pas à explorer le repository GitHub en amont, le README contient tous les détails techniques.
+
+---
+
+📎 Pièces jointes suggérées :
+- CV actualisé (PDF)
+- Screenshot du dashboard (PNG)
+- Architecture diagram (si disponible)
