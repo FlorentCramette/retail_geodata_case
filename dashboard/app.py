@@ -4,6 +4,15 @@ Tableau de bord interactif pour l'analyse retail géospatiale
 """
 
 import streamlit as st
+
+# Configuration de la page - DOIT ÊTRE EN PREMIER
+st.set_page_config(
+    page_title="Retail Geodata Analytics",
+    page_icon="🏪",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
 import pandas as pd
 import numpy as np
 import plotly.express as px
@@ -15,21 +24,16 @@ import sys
 import os
 
 # Ajout du chemin pour importer nos modules
-sys.path.append('../scripts')
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(current_dir)
+scripts_path = os.path.join(project_root, 'scripts')
+sys.path.append(scripts_path)
 
 try:
-    from ca_predictor import CAPredictor
-    from competitive_analysis import CompetitiveImpactAnalyzer
+    from ca_predictor_clean import CAPredictor
+    from competitive_analysis_clean import CompetitiveImpactAnalyzer
 except ImportError:
-    st.error("❌ Modules non trouvés. Assurez-vous que les scripts sont dans le dossier ../scripts/")
-
-# Configuration de la page
-st.set_page_config(
-    page_title="Retail Geodata Analytics",
-    page_icon="🏪",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+    st.error("❌ Modules non trouvés. Assurez-vous que les scripts sont dans le dossier scripts/")
 
 # CSS personnalisé
 st.markdown("""
@@ -61,11 +65,16 @@ st.markdown("""
 def load_data():
     """Charge les données avec cache"""
     try:
-        magasins = pd.read_csv('../data/magasins_performance.csv')
-        concurrents = pd.read_csv('../data/sites_concurrents.csv')
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.dirname(current_dir)
+        data_path = os.path.join(project_root, 'data')
+        
+        magasins = pd.read_csv(os.path.join(data_path, 'magasins_performance.csv'))
+        concurrents = pd.read_csv(os.path.join(data_path, 'sites_concurrents.csv'))
         return magasins, concurrents
-    except FileNotFoundError:
-        st.error("❌ Fichiers de données non trouvés. Exécutez d'abord le script generate_data.py")
+    except FileNotFoundError as e:
+        st.error(f"❌ Fichiers de données non trouvés: {e}")
+        st.info("💡 Exécutez d'abord le script generate_data.py depuis le dossier scripts/")
         return None, None
 
 def create_performance_map(df):
@@ -404,9 +413,52 @@ def main():
                                              concurrents_df['id_site'].tolist())
             
             if st.button("🔍 Analyser l'impact"):
-                # Simulation d'analyse d'impact
-                st.success(f"Analyse de l'impact du concurrent {concurrent_selected}")
-                st.info("💡 Cette fonctionnalité nécessite l'exécution du script competitive_analysis.py")
+                try:
+                    # Initialisation de l'analyseur
+                    analyzer = CompetitiveImpactAnalyzer(magasins_df, concurrents_df)
+                    
+                    # Analyse de l'impact
+                    with st.spinner(f"Analyse en cours pour {concurrent_selected}..."):
+                        impacts = analyzer.analyze_scenario(concurrent_selected)
+                    
+                    if impacts is not None:
+                        # Affichage des résultats
+                        magasins_impactes = impacts[impacts['dans_zone'] == True]
+                        
+                        if len(magasins_impactes) > 0:
+                            st.success(f"✅ Analyse terminée pour {concurrent_selected}")
+                            
+                            # Métriques de résumé
+                            col1, col2, col3 = st.columns(3)
+                            with col1:
+                                st.metric("🏪 Magasins impactés", len(magasins_impactes))
+                            with col2:
+                                perte_totale = magasins_impactes['perte_ca_estimee'].sum()
+                                st.metric("� Perte totale", f"{perte_totale:,.0f}€")
+                            with col3:
+                                impact_moyen = magasins_impactes['impact_percent'].mean()
+                                st.metric("📉 Impact moyen", f"{impact_moyen:.1%}")
+                            
+                            # Détail par magasin
+                            st.subheader("📊 Détail par magasin impacté")
+                            detail_display = magasins_impactes[[
+                                'id_magasin', 'magasin_ville', 'distance_km', 
+                                'impact_percent', 'perte_ca_estimee'
+                            ]].sort_values('perte_ca_estimee', ascending=False)
+                            
+                            detail_display['impact_percent'] = detail_display['impact_percent'].apply(lambda x: f"{x:.1%}")
+                            detail_display['perte_ca_estimee'] = detail_display['perte_ca_estimee'].apply(lambda x: f"{x:,.0f}€")
+                            detail_display['distance_km'] = detail_display['distance_km'].apply(lambda x: f"{x:.1f}km")
+                            
+                            st.dataframe(detail_display, use_container_width=True)
+                            
+                        else:
+                            st.info(f"✅ Aucun magasin impacté par {concurrent_selected}")
+                            st.write("Ce concurrent est situé en dehors des zones de chalandise de nos magasins.")
+                    
+                except Exception as e:
+                    st.error(f"❌ Erreur lors de l'analyse: {str(e)}")
+                    st.write("Vérifiez que tous les modules sont correctement installés.")
         else:
             st.warning("❌ Données de concurrents non disponibles")
 

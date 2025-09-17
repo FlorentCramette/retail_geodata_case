@@ -1,0 +1,33 @@
+2025-09-17 21:59:01,395 - DataCleaner - INFO - Loaded 53 raw magasin records
+2025-09-17 21:59:01,407 - DataCleaner - INFO - Column ville: 24 -> 13 unique values
+2025-09-17 21:59:01,415 - DataCleaner - INFO - Column ville: 8 nulls -> 0 nulls (strategy: remove)
+2025-09-17 21:59:01,419 - DataCleaner - INFO - Column latitude: 0 nulls -> 0 nulls (strategy: remove)
+2025-09-17 21:59:01,422 - DataCleaner - INFO - Column longitude: 0 nulls -> 0 nulls (strategy: remove)
+2025-09-17 21:59:01,449 - DataCleaner - INFO - Date column date_ouverture: 49 -> 45 valid dates
+2025-09-17 21:59:01,453 - DataCleaner - INFO - Outliers detected in ca_annuel: 6 (12.2%)
+2025-09-17 21:59:01,455 - DataCleaner - INFO - Column ca_annuel: 14 nulls -> 0 nulls (strategy: median)
+2025-09-17 21:59:01,456 - DataCleaner - INFO - Outliers detected in population_zone_1km: 6 (12.2%)
+2025-09-17 21:59:01,457 - DataCleaner - INFO - Column population_zone_1km: 18 nulls -> 0 nulls (strategy: median)
+2025-09-17 21:59:01,458 - DataCleaner - INFO - Outliers detected in surface_vente: 0 (0.0%)
+2025-09-17 21:59:01,460 - DataCleaner - INFO - Column surface_vente: 0 nulls -> 0 nulls (strategy: median)
+2025-09-17 21:59:01,461 - DataCleaner - INFO - Outliers detected in effectif: 2 (4.1%)
+2025-09-17 21:59:01,462 - DataCleaner - INFO - Column effectif: 4 nulls -> 0 nulls (strategy: median)
+2025-09-17 21:59:01,469 - DataCleaner - INFO - Duplicates removed: 3 (6.1%)
+2025-09-17 21:59:01,513 - DataCleaner - INFO - Column latitude: 0 nulls -> 0 nulls (strategy: remove)
+2025-09-17 21:59:01,520 - DataCleaner - INFO - Column longitude: 0 nulls -> 0 nulls (strategy: remove)
+2025-09-17 21:59:01,527 - DataCleaner - INFO - Column type_concurrent: 6 -> 5 unique values
+2025-09-17 21:59:01,531 - DataCleaner - INFO - Column enseigne_concurrent: 7 -> 5 unique values
+2025-09-17 21:59:01,533 - DataCleaner - INFO - Column ville_proche: 9 -> 9 unique values
+2025-09-17 21:59:01,536 - DataCleaner - INFO - Converted 3 zone values from meters to km
+2025-09-17 21:59:01,540 - DataCleaner - INFO - Column surface_prevue: 0 nulls -> 0 nulls (strategy: median)
+2025-09-17 21:59:01,544 - DataCleaner - INFO - Column investissement: 0 nulls -> 0 nulls (strategy: median)
+2025-09-17 21:59:01,545 - DataCleaner - INFO - Column zone_chalandise_km: 0 nulls -> 0 nulls (strategy: median)
+2025-09-17 21:59:01,547 - DataCleaner - INFO - Duplicates removed: 0 (0.0%)
+2025-09-17 21:59:02,213 - DataCleaner - INFO - Date column date: 5010 -> 4939 valid dates
+2025-09-17 21:59:02,226 - DataCleaner - INFO - Column date: 71 nulls -> 0 nulls (strategy: remove)
+2025-09-17 21:59:02,227 - DataCleaner - WARNING - Removing 109 negative transaction amounts
+2025-09-17 21:59:02,229 - DataCleaner - INFO - Outliers detected in montant: 0 (0.0%)
+2025-09-17 21:59:02,239 - DataCleaner - INFO - Column categorie: 177 -> 120 unique values
+2025-09-17 21:59:02,243 - DataCleaner - INFO - Column categorie: 476 nulls -> 0 nulls (strategy: mode)
+2025-09-17 21:59:02,245 - DataCleaner - WARNING - Removing 248 transactions with invalid magasin_id
+2025-09-17 21:59:02,252 - DataCleaner - INFO - Duplicates removed: 10 (0.2%)

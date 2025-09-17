@@ -1,0 +1,98 @@
+# Automatisation avec Power Automate / n8n
+# Workflow de récupération de données depuis SharePoint/OneDrive
+
+name: "Retail Data Pipeline - Power Automate"
+description: "Pipeline quotidien avec récupération automatique des fichiers"
+
+# Trigger: Quotidien à 6h00
+trigger:
+  type: "scheduled"
+  schedule: "0 6 * * *"  # Cron: 6h tous les jours
+  timezone: "Europe/Paris"
+
+# Workflow steps
+steps:
+  
+  # 1. Récupération depuis SharePoint
+  - name: "Get_SharePoint_Files"
+    type: "sharepoint.get_files"
+    config:
+      site_url: "https://company.sharepoint.com/sites/RetailData"
+      folder_path: "/Shared Documents/Daily Data"
+      file_pattern: "*_{today}.csv"
+      download_path: "./data/raw/"
+    
+  # 2. Récupération email avec pièces jointes
+  - name: "Get_Email_Attachments"  
+    type: "outlook.get_attachments"
+    config:
+      folder: "Inbox/Market Intelligence"
+      subject_filter: "Daily Competitor Report"
+      file_types: [".csv", ".xlsx"]
+      save_path: "./data/raw/"
+      
+  # 3. Appel API pour transactions
+  - name: "Fetch_API_Data"
+    type: "http.request"
+    config:
+      method: "GET"
+      url: "https://api.pos-system.com/v1/transactions"
+      headers:
+        Authorization: "Bearer {{secrets.api_token}}"
+      params:
+        date: "{{format_date(now(), 'YYYY-MM-DD')}}"
+        format: "csv"
+      save_response: "./data/raw/transactions_{{format_date(now(), 'YYYYMMDD')}}.csv"
+      
+  # 4. Vérification fichiers disponibles
+  - name: "Check_Files_Available"
+    type: "condition"
+    config:
+      condition: "files_exist(['./data/raw/magasins_*.csv', './data/raw/transactions_*.csv'])"
+      on_true: "continue"
+      on_false: "send_alert"
+      
+  # 5. Exécution pipeline Python
+  - name: "Run_Python_Pipeline"
+    type: "script.python"
+    config:
+      script_path: "./automation/daily_pipeline.py"
+      arguments: ["--mode", "run-once"]
+      timeout: 1800  # 30 minutes max
+      
+  # 6. Validation des résultats
+  - name: "Validate_Results"
+    type: "condition"
+    config:
+      condition: "pipeline_success == true"
+      on_true: "send_success_notification"
+      on_false: "send_error_alert"
+      
+  # 7. Mise à jour Teams/Slack
+  - name: "Send_Success_Notification"
+    type: "teams.send_message"
+    config:
+      webhook_url: "{{secrets.teams_webhook}}"
+      message: |
+        ✅ **Pipeline Retail - Succès**
+        📅 Date: {{format_date(now(), 'DD/MM/YYYY')}}
+        📊 Données traitées avec succès
+        🔗 [Voir Dashboard](http://dashboard.company.com)
+        
+  # 8. Alerte en cas d'erreur
+  - name: "Send_Error_Alert"
+    type: "teams.send_message"
+    config:
+      webhook_url: "{{secrets.teams_webhook}}"
+      message: |
+        ❌ **Pipeline Retail - Échec**
+        📅 Date: {{format_date(now(), 'DD/MM/YYYY')}}
+        ⚠️ Vérifier les logs: {{pipeline.log_url}}
+        📞 Contacter l'équipe data
+
+# Configuration des secrets (à définir dans l'interface)
+secrets:
+  - api_token
+  - teams_webhook
+  - sharepoint_client_id
+  - sharepoint_client_secret

@@ -1,0 +1,70 @@
+# Configuration Docker pour déploiement production
+version: '3.8'
+
+services:
+  # Option 1: Pipeline Python avec scheduler intégré
+  retail-pipeline:
+    build: .
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./reports:/app/reports
+    environment:
+      - PYTHONPATH=/app
+      - TZ=Europe/Paris
+    restart: unless-stopped
+    command: python automation/daily_pipeline.py --mode scheduler
+
+  # Option 2: Airflow (stack complet)
+  airflow-webserver:
+    image: apache/airflow:2.7.0
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=CeleryExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      - AIRFLOW__CELERY__RESULT_BACKEND=db+postgresql://airflow:airflow@postgres/airflow
+      - AIRFLOW__CELERY__BROKER_URL=redis://:@redis:6379/0
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./data:/opt/airflow/data
+    ports:
+      - "8080:8080"
+    command: webserver
+
+  # Option 3: Mage.ai (moderne et simple)
+  mage:
+    image: mageai/mageai:latest
+    command: mage start retail_project
+    environment:
+      - USER_CODE_PATH=/home/src/retail_project
+      - MAGE_DATABASE_CONNECTION_URL=postgresql+psycopg2://mage:mage@postgres:5432/mage
+    ports:
+      - "6789:6789"
+    volumes:
+      - ./mage_data:/home/src/retail_project
+      - ./data:/home/src/data
+    restart: unless-stopped
+    depends_on:
+      - postgres
+
+  # Base de données pour métadonnées
+  postgres:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_DB=airflow
+      - POSTGRES_MULTIPLE_DATABASES=mage
+    volumes:
+      - postgres_db_volume:/var/lib/postgresql/data
+
+  # Cache Redis (pour Airflow)
+  redis:
+    image: redis:7-alpine
+    expose:
+      - 6379
+
+volumes:
+  postgres_db_volume:

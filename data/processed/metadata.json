@@ -1,0 +1,35 @@
+{
+  "pipeline_run_time": "2025-09-17T21:59:02.442301",
+  "data_freshness": "2025-09-17T21:59:02.442301",
+  "pipeline_version": "1.0.0",
+  "processing_stats": {
+    "cleaning": {
+      "magasins": {
+        "initial_count": 53,
+        "final_count": 46,
+        "removed_count": 7,
+        "cleaning_rate": 13.20754716981132
+      },
+      "concurrents": {
+        "initial_count": 14,
+        "final_count": 14,
+        "removed_count": 0,
+        "cleaning_rate": 0.0
+      },
+      "transactions": {
+        "initial_count": 5010,
+        "final_count": 4572,
+        "removed_count": 438,
+        "cleaning_rate": 8.742514970059881
+      }
+    },
+    "validation": {
+      "validation_time": "2025-09-17T21:59:02.347140",
+      "datasets_validated": 2,
+      "total_tests": 14,
+      "passed_tests": 14,
+      "overall_success_rate": 100.0,
+      "overall_success": true
+    }
+  }
+}

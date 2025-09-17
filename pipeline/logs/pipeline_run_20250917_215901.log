@@ -1,0 +1,17 @@
+2025-09-17 21:59:01,363 - PipelineOrchestrator - INFO - All raw data files available
+2025-09-17 21:59:01,363 - PipelineOrchestrator - INFO - === STEP 1: DATA CLEANING ===
+2025-09-17 21:59:02,290 - PipelineOrchestrator - INFO - Data cleaning completed successfully
+2025-09-17 21:59:02,290 - PipelineOrchestrator - INFO - === STEP 2: DATA VALIDATION ===
+2025-09-17 21:59:02,352 - PipelineOrchestrator - INFO - Data validation completed successfully
+2025-09-17 21:59:02,353 - PipelineOrchestrator - INFO - === STEP 3: PREPARE PROCESSED DATA ===
+2025-09-17 21:59:02,364 - PipelineOrchestrator - INFO - Prepared magasins_performance.csv: 46 records
+2025-09-17 21:59:02,408 - PipelineOrchestrator - INFO - Prepared sites_concurrents.csv: 14 records
+2025-09-17 21:59:02,441 - PipelineOrchestrator - INFO - Prepared transactions.csv: 4572 records
+2025-09-17 21:59:02,445 - PipelineOrchestrator - INFO - Processed data preparation completed
+2025-09-17 21:59:02,446 - PipelineOrchestrator - INFO - === STEP 4: UPDATE ML/DASHBOARD DATA ===
+2025-09-17 21:59:02,451 - PipelineOrchestrator - INFO - Backed up magasins_performance.csv
+2025-09-17 21:59:02,455 - PipelineOrchestrator - INFO - Updated magasins_performance.csv with 46 records
+2025-09-17 21:59:02,459 - PipelineOrchestrator - INFO - Backed up sites_concurrents.csv
+2025-09-17 21:59:02,459 - PipelineOrchestrator - INFO - Updated sites_concurrents.csv with 14 records
+2025-09-17 21:59:02,461 - PipelineOrchestrator - INFO - ML/Dashboard data update completed
+2025-09-17 21:59:02,462 - PipelineOrchestrator - INFO - Pipeline report saved to C:\LOCAL_WORK_FLO\retail_geodata_case\pipeline\reports\pipeline_report_20250917_215902.txt

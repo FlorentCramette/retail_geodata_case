@@ -1,0 +1,21 @@
+📊 DATA CLEANING REPORT
+==================================================
+Timestamp: 2025-09-17 21:55:03
+
+🔧 MAGASINS
+  Initial records: 53
+  Final records: 46
+  Removed: 7
+  Cleaning rate: 13.2%
+
+🔧 CONCURRENTS
+  Initial records: 14
+  Final records: 14
+  Removed: 0
+  Cleaning rate: 0.0%
+
+🔧 TRANSACTIONS
+  Initial records: 5,010
+  Final records: 4,572
+  Removed: 438
+  Cleaning rate: 8.7%

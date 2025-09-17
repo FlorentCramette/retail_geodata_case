@@ -1,0 +1,39 @@
+"""
+Configuration Mage.ai pour pipeline quotidien retail
+Alternative moderne à Airflow - Plus simple à configurer
+"""
+
+# mage_data/pipelines/retail_daily/metadata.yaml
+---
+variables:
+  api_token: "{{ env_var('API_TOKEN') }}"
+  slack_webhook: "{{ env_var('SLACK_WEBHOOK') }}"
+  
+blocks:
+  - uuid: fetch_magasins_ftp
+    type: data_loader
+    upstream_blocks: []
+  - uuid: fetch_transactions_api  
+    type: data_loader
+    upstream_blocks: []
+  - uuid: fetch_competitors_email
+    type: data_loader
+    upstream_blocks: []
+  - uuid: clean_magasins_data
+    type: transformer
+    upstream_blocks: [fetch_magasins_ftp]
+  - uuid: clean_transactions_data
+    type: transformer
+    upstream_blocks: [fetch_transactions_api]
+  - uuid: validate_data_quality
+    type: transformer
+    upstream_blocks: [clean_magasins_data, clean_transactions_data]
+  - uuid: export_to_production
+    type: data_exporter
+    upstream_blocks: [validate_data_quality]
+
+schedule:
+  schedule_type: time_based
+  start_time: "2025-09-17"
+  schedule_interval: "@daily"
+  time_zone: "Europe/Paris"

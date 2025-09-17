@@ -1,0 +1,200 @@
+{
+  "magasins": {
+    "dataset": "magasins_staging",
+    "suite_name": "magasins_suite",
+    "validation_time": "2025-09-17T21:59:02.296893",
+    "success": true,
+    "results": [
+      {
+        "expectation_type": "expect_table_row_count_to_be_between",
+        "kwargs": {
+          "min_value": 40,
+          "max_value": 60
+        },
+        "success": true,
+        "result": {
+          "observed_value": 46
+        }
+      },
+      {
+        "expectation_type": "expect_column_to_exist",
+        "kwargs": {
+          "column": "id_magasin"
+        },
+        "success": true,
+        "result": {
+          "observed_value": true
+        }
+      },
+      {
+        "expectation_type": "expect_column_values_to_be_unique",
+        "kwargs": {
+          "column": "id_magasin"
+        },
+        "success": true,
+        "result": {
+          "observed_value": 46,
+          "total_count": 46
+        }
+      },
+      {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "column": "ville"
+        },
+        "success": "True",
+        "result": {
+          "observed_value": "0"
+        }
+      },
+      {
+        "expectation_type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "column": "latitude",
+          "min_value": 41.0,
+          "max_value": 51.0
+        },
+        "success": "True",
+        "result": {
+          "observed_value": 1.0,
+          "within_range": "46",
+          "total_values": 46
+        }
+      },
+      {
+        "expectation_type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "column": "longitude",
+          "min_value": -5.0,
+          "max_value": 10.0
+        },
+        "success": "True",
+        "result": {
+          "observed_value": 1.0,
+          "within_range": "46",
+          "total_values": 46
+        }
+      },
+      {
+        "expectation_type": "expect_column_values_to_be_of_type",
+        "kwargs": {
+          "column": "ca_annuel",
+          "type_": "float64"
+        },
+        "success": true,
+        "result": {
+          "observed_value": "float64",
+          "expected_value": "float64"
+        }
+      },
+      {
+        "expectation_type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "column": "ca_annuel",
+          "min_value": 100000,
+          "max_value": 10000000
+        },
+        "success": "True",
+        "result": {
+          "observed_value": 1.0,
+          "within_range": "46",
+          "total_values": 46
+        }
+      }
+    ],
+    "statistics": {
+      "total_tests": 8,
+      "passed_tests": 8,
+      "failed_tests": 0,
+      "success_rate": 100.0
+    }
+  },
+  "transactions": {
+    "dataset": "transactions_staging",
+    "suite_name": "transactions_suite",
+    "validation_time": "2025-09-17T21:59:02.343751",
+    "success": true,
+    "results": [
+      {
+        "expectation_type": "expect_table_row_count_to_be_between",
+        "kwargs": {
+          "min_value": 4000,
+          "max_value": 6000
+        },
+        "success": true,
+        "result": {
+          "observed_value": 4572
+        }
+      },
+      {
+        "expectation_type": "expect_column_values_to_be_unique",
+        "kwargs": {
+          "column": "transaction_id"
+        },
+        "success": true,
+        "result": {
+          "observed_value": 4572,
+          "total_count": 4572
+        }
+      },
+      {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "column": "date"
+        },
+        "success": "True",
+        "result": {
+          "observed_value": "0"
+        }
+      },
+      {
+        "expectation_type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "column": "montant",
+          "min_value": 0,
+          "max_value": 1000
+        },
+        "success": "True",
+        "result": {
+          "observed_value": 1.0,
+          "within_range": "4572",
+          "total_values": 4572
+        }
+      },
+      {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "column": "magasin_id"
+        },
+        "success": "True",
+        "result": {
+          "observed_value": "0"
+        }
+      },
+      {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "column": "categorie"
+        },
+        "success": "True",
+        "result": {
+          "observed_value": "0"
+        }
+      }
+    ],
+    "statistics": {
+      "total_tests": 6,
+      "passed_tests": 6,
+      "failed_tests": 0,
+      "success_rate": 100.0
+    }
+  },
+  "summary": {
+    "validation_time": "2025-09-17T21:59:02.347140",
+    "datasets_validated": 2,
+    "total_tests": 14,
+    "passed_tests": 14,
+    "overall_success_rate": 100.0,
+    "overall_success": true
+  }
+}
