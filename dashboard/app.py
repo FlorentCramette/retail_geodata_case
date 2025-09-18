@@ -215,7 +215,10 @@ def prediction_interface(magasins_df):
         with col1:
             enseigne = st.selectbox("Enseigne", magasins_df['enseigne'].unique())
             format_mag = st.selectbox("Format", magasins_df['format'].unique())
-            ville = st.selectbox("Ville", sorted(magasins_df['ville'].unique()))
+            # Nettoyer les villes pour le selectbox
+            villes_clean = magasins_df['ville'].dropna().astype(str)
+            villes_unique = [v for v in villes_clean.unique() if v.strip() and v != 'nan']
+            ville = st.selectbox("Ville", sorted(villes_unique))
             surface = st.number_input("Surface de vente (m²)", min_value=100, max_value=5000, value=1000)
             effectif = st.number_input("Effectif", min_value=5, max_value=100, value=20)
             population = st.number_input("Population zone 1km", min_value=1000, max_value=50000, value=15000)
@@ -297,6 +300,21 @@ def main():
     if magasins_df is None:
         st.stop()
     
+    # Nettoyage et validation des données
+    try:
+        # S'assurer que la colonne ville est bien formatée
+        if 'ville' in magasins_df.columns:
+            magasins_df['ville'] = magasins_df['ville'].astype(str)
+            # Supprimer les lignes avec des villes invalides
+            magasins_df = magasins_df[
+                (magasins_df['ville'].notna()) & 
+                (magasins_df['ville'] != 'nan') & 
+                (magasins_df['ville'].str.strip() != '')
+            ]
+    except Exception as e:
+        st.error(f"Erreur dans le nettoyage des données: {e}")
+        st.stop()
+    
     # Sidebar pour la navigation
     st.sidebar.markdown('<div class="sidebar-header">🧭 Navigation</div>', unsafe_allow_html=True)
     
@@ -322,10 +340,15 @@ def main():
     )
     
     # Filtre par ville
+    # Nettoyer les valeurs de ville (supprimer NaN et valeurs vides)
+    villes_clean = magasins_df['ville'].dropna().astype(str)
+    villes_unique = [v for v in villes_clean.unique() if v.strip() and v != 'nan']
+    villes_sorted = sorted(villes_unique)
+    
     villes_selected = st.sidebar.multiselect(
         "Villes",
-        sorted(magasins_df['ville'].unique()),
-        default=sorted(magasins_df['ville'].unique())
+        villes_sorted,
+        default=villes_sorted
     )
     
     # Filtrage des données
