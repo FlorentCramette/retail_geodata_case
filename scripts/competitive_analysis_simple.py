@@ -154,6 +154,10 @@ class CompetitiveImpactAnalyzer:
                 'error': str(e),
                 'geopy_available': GEOPY_AVAILABLE
             }
+    
+    def analyze_scenario(self, concurrent_id):
+        """Alias pour analyze_impact pour compatibilité avec le dashboard"""
+        return self.analyze_impact(concurrent_id)
 
 
 # Test du module si exécuté directement
