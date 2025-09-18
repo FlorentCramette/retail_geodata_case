@@ -29,11 +29,34 @@ project_root = os.path.dirname(current_dir)
 scripts_path = os.path.join(project_root, 'scripts')
 sys.path.append(scripts_path)
 
+# Variables pour les modules
+CAPredictor = None
+CompetitiveImpactAnalyzer = None
+
+# Tentative d'import des modules - versions robustes d'abord
 try:
-    from ca_predictor_clean import CAPredictor
-    from competitive_analysis_clean import CompetitiveImpactAnalyzer
+    from ca_predictor_simple import CAPredictor, create_demo_predictor
+    PREDICTOR_AVAILABLE = True
 except ImportError:
-    st.error("❌ Modules non trouvés. Assurez-vous que les scripts sont dans le dossier scripts/")
+    try:
+        from ca_predictor_clean import CAPredictor
+        PREDICTOR_AVAILABLE = True
+    except ImportError:
+        PREDICTOR_AVAILABLE = False
+    
+try:
+    from competitive_analysis_simple import CompetitiveImpactAnalyzer
+    ANALYZER_AVAILABLE = True
+except ImportError:
+    try:
+        from competitive_analysis_clean import CompetitiveImpactAnalyzer
+        ANALYZER_AVAILABLE = True
+    except ImportError:
+        ANALYZER_AVAILABLE = False
+
+# Message de statut discret seulement en cas de problème
+if not PREDICTOR_AVAILABLE or not ANALYZER_AVAILABLE:
+    st.info("ℹ️ Certaines fonctionnalités ML avancées ne sont pas disponibles. Le dashboard fonctionne en mode standard.")
 
 # CSS personnalisé
 st.markdown("""
