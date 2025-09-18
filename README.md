@@ -8,7 +8,7 @@
 > **🎯 Pipeline de données production-ready pour l'optimisation d'implantations retail**  
 > Démonstration complète : ETL automatisé + ML + Dashboard interactif + Solutions production
 
-## 🌟 **[>>> ESSAYEZ LA DÉMO EN LIGNE <<<](https://florentcramette-retail-geodata-case.streamlit.app)**
+## 🌟 **[>>> ESSAYEZ LA DÉMO EN LIGNE <<<](https://retailgeodatacase-jjdsfxbvgmdwn3n4yzh6pg.streamlit.app/)**
 
 ![Dashboard Preview](https://img.shields.io/badge/Dashboard-Interactive-success.svg)
 
