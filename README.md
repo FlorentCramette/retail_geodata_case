@@ -3,7 +3,7 @@
 [![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://python.org)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.28-red.svg)](https://streamlit.io)
 [![ML](https://img.shields.io/badge/ML-scikit--learn-orange.svg)](https://scikit-learn.org)
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Streamlit_Cloud-ff6b6b.svg)](https://florentcramette-retail-geodata-case.streamlit.app)
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Streamlit_Cloud-ff6b6b.svg)](https://retailgeodatacase-jjdsfxbvgmdwn3n4yzh6pg.streamlit.app/)
 
 > **🎯 Pipeline de données production-ready pour l'optimisation d'implantations retail**  
 > Démonstration complète : ETL automatisé + ML + Dashboard interactif + Solutions production
