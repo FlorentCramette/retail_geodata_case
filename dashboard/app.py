@@ -45,11 +45,11 @@ except ImportError:
         PREDICTOR_AVAILABLE = False
     
 try:
-    from competitive_analysis_simple import CompetitiveImpactAnalyzer
+    from competitive_analysis_clean import CompetitiveImpactAnalyzer
     ANALYZER_AVAILABLE = True
 except ImportError:
     try:
-        from competitive_analysis_clean import CompetitiveImpactAnalyzer
+        from competitive_analysis_simple import CompetitiveImpactAnalyzer
         ANALYZER_AVAILABLE = True
     except ImportError:
         ANALYZER_AVAILABLE = False
@@ -462,6 +462,11 @@ def main():
                 try:
                     # Initialisation de l'analyseur
                     analyzer = CompetitiveImpactAnalyzer(magasins_df, concurrents_df)
+                    
+                    # Vérification que la méthode existe
+                    if not hasattr(analyzer, 'analyze_scenario'):
+                        st.error("❌ Méthode analyze_scenario non disponible. Utilisation du module de fallback.")
+                        st.stop()
                     
                     # Analyse de l'impact
                     with st.spinner(f"Analyse en cours pour {concurrent_selected}..."):
