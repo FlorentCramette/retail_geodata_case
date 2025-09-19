@@ -30,6 +30,10 @@ class CAPredictor:
         
         data = df.copy()
         
+        # Gestion des valeurs manquantes
+        numeric_columns = data.select_dtypes(include=[np.number]).columns
+        data[numeric_columns] = data[numeric_columns].fillna(data[numeric_columns].median())
+        
         # Variables numériques
         numeric_features = ['surface_vente', 'effectif', 'population_zone_1km', 
                           'densite_hab_km2', 'revenu_median_zone', 'age_moyen_zone',
@@ -228,8 +232,21 @@ def demo_prediction():
     print("🚀 DÉMONSTRATION - Modèle prédictif CA")
     print("="*50)
     
-    # Chargement des données
-    df = pd.read_csv('../data/magasins_performance.csv')
+    # Chargement des données avec chemin corrigé
+    import os
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    data_path = os.path.join(os.path.dirname(current_dir), 'data', 'magasins_performance.csv')
+    
+    if not os.path.exists(data_path):
+        print(f"❌ Fichier non trouvé: {data_path}")
+        return None
+        
+    df = pd.read_csv(data_path)
+    
+    # Nettoyage des données NaN
+    numeric_columns = df.select_dtypes(include=[np.number]).columns
+    df[numeric_columns] = df[numeric_columns].fillna(df[numeric_columns].median())
+    
     print(f"📊 Données chargées: {len(df)} magasins")
     
     # Initialisation et entraînement
